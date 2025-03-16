@@ -1,6 +1,6 @@
 # Crud de Usuários
 
-> Utilizando o Raact.js + MySQL
+> Utilizando o Raact.js + MySQL + Node.js
 ## Frontend 🎨
 ### Blibliotecas utilizadas no projeto:
  - React.js
@@ -9,3 +9,8 @@
  - react toastify
 
 ## Backend ⚙️
+
+## Bibliotecas utilizadas no projeto:
+ - Mysql
+ - phpMyAdmin
+ - Node
