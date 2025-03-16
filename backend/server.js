@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
     const sql = "SELECT * FROM usuario";
     db.query(sql, (err, result) => {
         if(err) return res.json({Message: "Error no servidor"});
-        return res.json(result);
+        return res.status(200).json(result);
     })
 })
 
@@ -30,27 +30,27 @@ app.post('/usuario', (req, res) => {
         req.body.email,
         req.body.telefone
     ]
-    db.query(sql, [values], (err, result) => {
+    db.query(sql, [values], (err) => {
         if(err) return res.json(err);
-        return res.json(result);
+        return res.status(200).json("Usuário criado com sucesso.");
     })
 })
 
 app.put('/updade/:id', (req, res)=> {
-    const sql = 'UPDATE usuario SET nome =? , email =? , telefone =? WHERE id=?';
-    const id = req.params.id
-    db.query(sql, [req.body.nome, req.body.email, req.body.telefone], (err, result)=>{
+    const sql = "UPDATE usuario SET `nome` = ?,  `email` = ?, `telefone` = ?  WHERE `id` = ?";
+    const id = req.params.id;
+    db.query(sql, [req.body.nome, req.body.email, req.body.telefone, id], (err)=>{
         if(err) return res.json({Message: "Erro dentro do servidor"});
-        return res.json(result);
+        return res.status(200).json("Usuário atulaizado com sucesso.");
     })
 })
 
 app.delete('/delete/:id', (req, res) => {
-    const sql = "DELETE FROM usuario WHERE id=?";
+    const sql = "DELETE FROM usuario WHERE `id` = ?";
     const id = req.params.id
-    db.query(sql, [id], (err, result) => {
+    db.query(sql, [id], (err) => {
         if(err) return res.json({Message: "Erro dentro do servidor"});
-        return res.json(result);
+        return res.status(200).json("Usuário deletado com sucesso.");
     })
 })
 

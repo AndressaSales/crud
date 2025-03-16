@@ -3,14 +3,18 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 const User = ({users, setUsers, setValues}) => {
-  const handleEdit = (item) => {
-    setValues(item)
+  const handleEdit = (u) => {
+    setValues(u)
   }
-  const handledelete = (id) => {
-    axios.delete('http://localhost:8082/delete/'+id)
-    .then(({data}) => {const newArry = users.filter((user) => user.id !== id);
-      setUsers(newArry); toast.success(data)
-     })
+  const handledelete = async (id) => {
+    axios.delete('http://localhost:8082/delete/' + id)
+    .then(({data}) => {
+      const narry = users.filter((user) => user.id !== id);
+      setUsers(narry);
+      toast.success(data) 
+    })
+     .catch(({data}) => toast.error(data))
+    setValues(null)
   }
   return (
    <table className='w-full p-[20px] shadow max-w-[1120px] rounded-[5px]' style={{margin: '20px auto', wordBreak: 'break-all'}}>
@@ -25,16 +29,16 @@ const User = ({users, setUsers, setValues}) => {
         {
           users.map((u) => {
             return <tr key={u.id}>
-              <td className='pt-[15px]' width="30%">{u.nome}</td>
-              <td className='pt-[15px]' width="30%">{u.email}</td>
-              <td className='pt-[15px]' width="20%">{u.telefone}</td>
-              <td className='pt-[15px]' width='5%'> 
-                <FaEdit className='text-blue-700 cursor-pointer' onClick={() => handleEdit(item)} />
-              </td>
-              <td className='pt-[15px]' width='5%'>
-                <FaTrash className='text-red-500 cursor-pointer' onClick={() => handledelete(item.id)}/>
-              </td>
-            </tr>
+            <td className='pt-[15px]' width="30%">{u.nome}</td>
+            <td className='pt-[15px]' width="30%">{u.email}</td>
+            <td className='pt-[15px]' width="20%">{u.telefone}</td>
+            <td className='pt-[15px]' width='5%'> 
+              <FaEdit className='text-blue-700 cursor-pointer' onClick={() => handleEdit(u)} />
+            </td>
+            <td className='pt-[15px]' width='5%'>
+              <FaTrash className='text-red-500 cursor-pointer' onClick={() => handledelete(u.id)}/>
+            </td>
+          </tr>
           })
         }
       </tbody>
