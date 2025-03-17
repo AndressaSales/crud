@@ -10,20 +10,27 @@ function App() {
   const [users, setUsers] = useState([])
   const [values, setValues] = useState(null)
 
+  const getUsers = async () => {
+    try{
+      const res = await axios.get('http://localhost:8082/')
+      setUsers(res.data.sort((a,b) => (a.nome > b.nome ? 1 : -1)));
+    } catch(err){
+      toast.error(err);
+    }
+  }
+
   useEffect(() => {
-    axios.get('http://localhost:8082/')
-    .then(res => setUsers(res.data))
-    .catch(err => toast.error(err))
-  }, [])
+    getUsers();
+  }, [setUsers])
 
   return (
    <div>
       <h2 className="text-center p-7 text-4xl font-bold text-gray-900">Usuários</h2>
       <div className="justify-center flex items-center flex-col">
-       <FormUser values={values} setValues={setValues} setUsers={setUsers} />
+       <FormUser values={values} setValues={setValues} getUsers={getUsers} />
        <User setValues={setValues} users={users} setUsers={setUsers} />
       </div>
-      <ToastContainer />
+      <ToastContainer autoClose={3000} />
    </div>
   )
 }

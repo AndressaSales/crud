@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useRef } from "react";
 import {toast} from 'react-toastify'
-const FormUser = ({values, setValues, setUsers}) => {
+const FormUser = ({values, setValues, getUsers}) => {
 
     const ref = useRef();
     useEffect(() => {
@@ -42,12 +42,12 @@ const FormUser = ({values, setValues, setUsers}) => {
         user.email.value = '';
         user.telefone.value = '';
         setValues(null);
-        //setUsers();
+        getUsers();
     }
 
   return (
     <form className=' flex lg:flex-row flex-col  py-10 px-71 text-gray-800 gap-6' ref={ref}  onSubmit={handleSubmit}>
-        <div className="flex-col flex gap-2 text-gray-900 font-serif">
+        <div className="flex-col flex gap-2 text-gray-900">
             <label>Name</label>
             <input className='border-gray-600 border-[2px] outline-none py-2 rounded-md pl-2' name="nome" />
         </div>
